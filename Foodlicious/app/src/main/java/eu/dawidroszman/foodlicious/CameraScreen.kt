@@ -29,15 +29,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ModifierLocalBeyondBoundsLayout
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
-import androidx.core.os.bundleOf
 import androidx.navigation.NavController
-import androidx.navigation.NavOptions
 import java.io.File
 import java.io.FileOutputStream
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -105,6 +104,8 @@ private fun onPhotoTaken(bitmap: Bitmap, context: Context){
     bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fOut)
     fOut.close()
 }
+
+
 
 private fun takePhoto(
     controller: LifecycleCameraController,

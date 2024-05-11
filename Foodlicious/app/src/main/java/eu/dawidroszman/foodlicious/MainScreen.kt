@@ -36,18 +36,18 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import androidx.navigation.NavType
-import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 import java.io.File
 
 @Composable
 fun MainScreen(modifier: Modifier = Modifier, navController: NavController) {
 
+    val photoViewModel : PhotoViewModel = viewModel()
 
     Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
         Column(modifier = androidx.compose.ui.Modifier
             .padding(innerPadding)) {
 //            Header()
+            Text(text=photoViewModel.photoUiState)
             Column {
                 Content(modifier = Modifier.weight(1f, false))
                 ScanBtn(navController)

@@ -29,6 +29,11 @@ app = Flask(__name__)
 model = load_model("./plant_type_classifier.keras")
 
 
+@app.route("/hello", methods=["GET"])
+def hello():
+    return "Hello from the API", 200
+
+
 @app.route("/get_fruit_name", methods=["POST"])
 def get_fruit_name():
     # Check if a file was posted

@@ -87,6 +87,7 @@ class MainActivity : ComponentActivity() {
     companion object {
         private val CAMERAX_PERMISSIONS = arrayOf(
             Manifest.permission.CAMERA,
+            Manifest.permission.INTERNET,
         )
     }
 }
