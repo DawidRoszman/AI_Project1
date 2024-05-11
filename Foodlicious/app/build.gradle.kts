@@ -66,7 +66,10 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
-    
+
+    implementation("androidx.compose.material:material-icons-extended-android:1.6.7")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
+
     val cameraxVersion = "1.3.3"
     implementation("androidx.camera:camera-core:$cameraxVersion")
     implementation("androidx.camera:camera-camera2:$cameraxVersion")

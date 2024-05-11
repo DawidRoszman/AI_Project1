@@ -2,13 +2,19 @@ package eu.dawidroszman.foodlicious
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.os.ParcelFileDescriptor
+import android.util.Log
 import android.widget.ScrollView
 import android.widget.Space
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.camera.core.ImageCapture.OnImageCapturedCallback
+import androidx.camera.core.ImageCaptureException
+import androidx.camera.core.ImageProxy
+import androidx.camera.view.LifecycleCameraController
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -48,6 +54,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import eu.dawidroszman.foodlicious.ui.theme.FoodliciousTheme
@@ -60,6 +67,7 @@ class MainActivity : ComponentActivity() {
                 this, CAMERAX_PERMISSIONS, 0
             )
         }
+
         enableEdgeToEdge()
         setContent {
             FoodliciousTheme {
@@ -67,6 +75,7 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+
     private fun hasRequiredPermissions(): Boolean {
         return CAMERAX_PERMISSIONS.all { it : String ->
             ContextCompat.checkSelfPermission(

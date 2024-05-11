@@ -1,5 +1,10 @@
 package eu.dawidroszman.foodlicious
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.os.Bundle
+import android.os.Parcelable
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -20,18 +25,29 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import androidx.navigation.NavType
+import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
+import java.io.File
 
 @Composable
 fun MainScreen(modifier: Modifier = Modifier, navController: NavController) {
+
+
     Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
         Column(modifier = androidx.compose.ui.Modifier
             .padding(innerPadding)) {
-            Header()
+//            Header()
             Column {
                 Content(modifier = Modifier.weight(1f, false))
                 ScanBtn(navController)
@@ -72,13 +88,29 @@ fun Header(){
 //}
 @Composable
 fun Content(modifier: Modifier){
+    val context = LocalContext.current
+    val path = context.getExternalFilesDir(null)!!.absolutePath
+    val imagePath = "$path/image.jpg"
+    val photo = BitmapFactory.decodeFile(imagePath)
+    File(imagePath).deleteOnExit()
+    if (photo == null) {
+        Column(modifier = modifier.fillMaxWidth(), verticalArrangement = Arrangement.Center, horizontalAlignment = androidx.compose.ui.Alignment.CenterHorizontally) {
+            Text(text = "No Photo")
+        }
+
+        return
+    }
     Column(modifier = modifier
         .verticalScroll(rememberScrollState())
     ) {
+
+        Image(bitmap = photo.asImageBitmap(),
+            contentDescription = "Photo",
+            modifier = Modifier.align(Alignment.CenterHorizontally)
+        )
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
             Text(text = "Bilimbi", fontWeight = FontWeight.Bold, fontSize = 32.sp)
         }
-
         Column(modifier = Modifier.padding(10.dp)) {
             Item("Origin", "Native to tropical regions of Southeast Asia")
             Item(title = "Description", description = "Bilimbi fruits are small, averaging 4 to 10 centimeters in length and 1 to 2 centimeters in diameter, and have an elongated, oblong, cylindrical, to ellipsoidal shape with blunt, slightly tapered ends. The fruit's exterior sometimes features five distinct sides created by shallow ribs, and the stem-end is capped with a thin, dark brown, and brittle star-shaped calyx. The fruit’s skin is thin, being easily damaged, bruised, or punctured, and has a smooth, glossy, taut, and waxy feel. The skin ripens from dark green to shades of light green, yellow-green, ivory, to white when ripe. Underneath the surface, the flesh is crisp, firm, aqueous, and pale green when young, lightening in color, and becoming softer and more jelly-like as it ages. When sliced in half, the fruits reveal a five-pointed star in the center of the flesh and contain 6 to 7 tiny, light brown seeds. Bilimbi fruits release a refreshing aroma and are edible raw or cooked. When raw, the fruits taste sour, acidic, tart, and tangy.")

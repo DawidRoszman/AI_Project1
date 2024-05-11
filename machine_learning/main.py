@@ -28,19 +28,8 @@ classes = [
     "watermelon",
 ]
 
-
-# train_dir = "./split_ttv_dataset_type_of_plants/Train_Set_Folder/"
-# validate_dir = "./split_ttv_dataset_type_of_plants/Validation_Set_Folder/"
-# test_dir = "./split_ttv_dataset_type_of_plants/Test_Set_Folder/"
-#
-# train_dir_filenames = [os.listdir(train_dir + x) for x in classes]
-# validate_dir_filenames = [os.listdir(validate_dir + x) for x in classes]
-# test_dir_filenames = [os.listdir(test_dir + x) for x in classes]
-#
-# print(validate_dir_filenames)
-
 dataset_root = "split_ttv_dataset_type_of_plants"
-train_split = 0.8  # 80% for training, 20% for testing
+train_split = 0.7
 
 # Create directories for train and test data
 train_data_dir = "train"
@@ -48,27 +37,28 @@ test_data_dir = "test"
 os.makedirs(train_data_dir, exist_ok=True)
 os.makedirs(test_data_dir, exist_ok=True)
 
-for plant_category in os.listdir(dataset_root):
-    if os.path.isdir(os.path.join(dataset_root, plant_category)):
-        print(plant_category)
-        if plant_category not in classes:
-            continue
-        images = os.listdir(os.path.join(dataset_root, plant_category))
-        num_images = len(images)
-        num_train = int(train_split * num_images)
+for t in os.listdir(dataset_root):
+    for plant_category in os.listdir(os.path.join(dataset_root, t)):
+        if os.path.isdir(os.path.join(dataset_root, plant_category)):
+            print(plant_category)
+            if plant_category not in classes:
+                continue
+            images = os.listdir(os.path.join(dataset_root, plant_category))
+            num_images = len(images)
+            num_train = int(train_split * num_images)
 
-        # Shuffle the images
-        random.shuffle(images)
+            # Shuffle the images
+            random.shuffle(images)
 
-        # Copy images to train and test directories
-        for i, image in enumerate(images):
-            src = os.path.join(dataset_root, plant_category, image)
-            if i < num_train:
-                dst = os.path.join(train_data_dir, plant_category, image)
-            else:
-                dst = os.path.join(test_data_dir, plant_category, image)
-            os.makedirs(os.path.dirname(dst), exist_ok=True)
-            copyfile(src, dst)
+            # Copy images to train and test directories
+            for i, image in enumerate(images):
+                src = os.path.join(dataset_root, plant_category, image)
+                if i < num_train:
+                    dst = os.path.join(train_data_dir, plant_category, image)
+                else:
+                    dst = os.path.join(test_data_dir, plant_category, image)
+                os.makedirs(os.path.dirname(dst), exist_ok=True)
+                copyfile(src, dst)
 
 train_dir = "./train"
 test_dir = "./test"
@@ -134,7 +124,7 @@ early_stopping = EarlyStopping(
 )
 
 # Train the model with early stopping
-epochs = 100  # You can adjust this number based on your needs
+epochs = 60
 history = model.fit(
     train_generator,
     epochs=epochs,
