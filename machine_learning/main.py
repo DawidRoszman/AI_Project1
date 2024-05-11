@@ -2,12 +2,16 @@ import random
 import os
 from shutil import copyfile
 
+from tensorflow.keras.preprocessing.image import load_img, img_to_array
+import numpy as np
 
+import tensorflow as tf
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Conv2D, MaxPooling2D, Flatten, Dense, Dropout
 from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.callbacks import EarlyStopping
+from tensorflow.keras.models import load_model
 
 
 IMAGE_WIDTH = 128
@@ -91,6 +95,7 @@ test_generator = test_datagen.flow_from_directory(
     class_mode="categorical",
 )
 
+print(len(train_generator.class_indices))
 
 # Create the CNN model
 model = Sequential()
@@ -108,7 +113,7 @@ model.add(MaxPooling2D(2, 2))
 model.add(Flatten())
 model.add(Dense(512, activation="relu"))
 model.add(Dropout(0.5))
-model.add(Dense(len(train_generator.class_indices), activation="softmax"))
+model.add(Dense(9, activation="softmax"))
 
 
 model.compile(
@@ -123,20 +128,45 @@ early_stopping = EarlyStopping(
     monitor="val_loss", patience=5, restore_best_weights=True
 )
 
-# Train the model with early stopping
-epochs = 60
-history = model.fit(
-    train_generator,
-    epochs=epochs,
-    validation_data=test_generator,
-    callbacks=[early_stopping],
-)
 
+# Train the model with early stopping
+# epochs = 1
+# history = model.fit(
+#     train_generator,
+#     epochs=epochs,
+#     validation_data=test_generator,
+#     callbacks=[early_stopping],
+# )
+# Save the model
+# model.save("plant_type_classifier.keras")
+
+# Load model
+model = load_model("./plant_type_classifier.keras")
 
 # Evaluate the model
-test_loss, test_acc = model.evaluate(test_generator)
-print("Test accuracy:", test_acc)
+# test_loss, test_acc = model.evaluate(test_generator)
+# print("Test accuracy:", test_acc)
 
 
-# Save the model
-model.save("plant_type_classifier.h5")
+# Load the image
+img_path = "./split_ttv_dataset_type_of_plants/waterapple/aug_0_7674.jpg"
+img = load_img(
+    img_path, target_size=IMAGE_SIZE
+)  # replace with the input size of your model
+
+# Convert the image to a numpy array
+img_array = img_to_array(img)
+img_array = np.expand_dims(img_array, axis=0)
+
+# Normalize the image (if your model expects normalized images)
+img_array /= 255.0
+
+# Use the model to make a prediction
+prediction = model.predict(img_array)
+
+# Print the prediction
+print(prediction)
+
+index = np.argmax(prediction)
+fruit_name = classes[index]
+print(fruit_name)
