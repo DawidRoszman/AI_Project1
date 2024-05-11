@@ -5,6 +5,7 @@ import numpy as np
 from flask import request
 import os
 import uuid
+from fruit_data import fruits
 
 IMAGE_WIDTH = 128
 IMAGE_HEIGHT = 128
@@ -56,10 +57,16 @@ def get_fruit_name():
     index = np.argmax(prediction)
     fruit_name = classes[index]
 
+    fruit = ""
+
+    for data in fruits.fruits:
+        if data["id"] == fruit_name:
+            fruit = data
+
     # Remove the temporary file
     os.remove(temp_filename)
 
-    return jsonify({"fruit_name": fruit_name}), 200
+    return jsonify({"fruit_name": fruit}), 200
 
 
 if __name__ == "__main__":
