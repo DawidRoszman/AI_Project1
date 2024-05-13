@@ -11,7 +11,7 @@ import retrofit2.http.Part
 val gson = GsonBuilder()
     .setLenient()
     .create()
-private const val BASE_URL = "http://192.168.0.135:8080"
+private const val BASE_URL = "https://foodlicious.dawidroszman.eu"
 private val retrofit = Retrofit.Builder()
     .addConverterFactory(GsonConverterFactory.create(gson))
     .baseUrl(BASE_URL)

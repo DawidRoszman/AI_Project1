@@ -29,7 +29,7 @@ app = Flask(__name__)
 model = load_model("./plant_type_classifier.keras")
 
 
-@app.route("/hello", methods=["GET"])
+@app.route("/", methods=["GET"])
 def hello():
     return "Hello from the API", 200
 
@@ -58,6 +58,7 @@ def get_fruit_name():
     # Use the model to make a prediction
     prediction = model.predict(img_array)
 
+    print(prediction)
     # Get the name of the fruit
     index = np.argmax(prediction)
     fruit_name = classes[index]

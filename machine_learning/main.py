@@ -20,17 +20,7 @@ IMAGE_SIZE = (IMAGE_WIDTH, IMAGE_HEIGHT)
 IMAGE_CHANNELS = 3
 BATCH_SIZE = 32
 
-classes = [
-    "bilimbi",
-    "mango",
-    "guava",
-    "orange",
-    "papaya",
-    "pineapple",
-    "sweet potatoes",
-    "waterapple",
-    "watermelon",
-]
+classes = []
 
 dataset_root = "split_ttv_dataset_type_of_plants"
 train_split = 0.7
@@ -41,29 +31,27 @@ test_data_dir = "test"
 os.makedirs(train_data_dir, exist_ok=True)
 os.makedirs(test_data_dir, exist_ok=True)
 
-for t in os.listdir(dataset_root):
-    for plant_category in os.listdir(os.path.join(dataset_root, t)):
-        if os.path.isdir(os.path.join(dataset_root, plant_category)):
-            print(plant_category)
-            if plant_category not in classes:
-                continue
-            images = os.listdir(os.path.join(dataset_root, plant_category))
-            num_images = len(images)
-            num_train = int(train_split * num_images)
+for plant_category in os.listdir(dataset_root):
+    print(plant_category)
+    if os.path.isdir(os.path.join(dataset_root, plant_category)):
+        classes.append(plant_category)
+        images = os.listdir(os.path.join(dataset_root, plant_category))
+        num_images = len(images)
+        num_train = int(train_split * num_images)
 
-            # Shuffle the images
-            random.shuffle(images)
+        # Shuffle the images
+        random.shuffle(images)
 
-            # Copy images to train and test directories
-            for i, image in enumerate(images):
-                src = os.path.join(dataset_root, plant_category, image)
-                if i < num_train:
-                    dst = os.path.join(train_data_dir, plant_category, image)
-                else:
-                    dst = os.path.join(test_data_dir, plant_category, image)
-                os.makedirs(os.path.dirname(dst), exist_ok=True)
-                copyfile(src, dst)
-
+        # Copy images to train and test directories
+        for i, image in enumerate(images):
+            src = os.path.join(dataset_root, plant_category, image)
+            if i < num_train:
+                dst = os.path.join(train_data_dir, plant_category, image)
+            else:
+                dst = os.path.join(test_data_dir, plant_category, image)
+            os.makedirs(os.path.dirname(dst), exist_ok=True)
+            copyfile(src, dst)
+print(classes)
 train_dir = "./train"
 test_dir = "./test"
 # Create data generators for training and testing
@@ -113,7 +101,7 @@ model.add(MaxPooling2D(2, 2))
 model.add(Flatten())
 model.add(Dense(512, activation="relu"))
 model.add(Dropout(0.5))
-model.add(Dense(9, activation="softmax"))
+model.add(Dense(len(train_generator.class_indices), activation="softmax"))
 
 
 model.compile(
@@ -130,22 +118,22 @@ early_stopping = EarlyStopping(
 
 
 # Train the model with early stopping
-# epochs = 1
-# history = model.fit(
-#     train_generator,
-#     epochs=epochs,
-#     validation_data=test_generator,
-#     callbacks=[early_stopping],
-# )
+epochs = 60
+history = model.fit(
+    train_generator,
+    epochs=epochs,
+    validation_data=test_generator,
+    callbacks=[early_stopping],
+)
 # Save the model
-# model.save("plant_type_classifier.keras")
+model.save("plant_type_classifier_all.keras")
 
 # Load model
-model = load_model("./plant_type_classifier.keras")
+# model = load_model("./plant_type_classifier.keras")
 
 # Evaluate the model
-# test_loss, test_acc = model.evaluate(test_generator)
-# print("Test accuracy:", test_acc)
+test_loss, test_acc = model.evaluate(test_generator)
+print("Test accuracy:", test_acc)
 
 
 # Load the image
