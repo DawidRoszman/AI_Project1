@@ -34,6 +34,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import java.io.File
@@ -47,9 +48,8 @@ fun MainScreen(modifier: Modifier = Modifier, navController: NavController) {
         Column(modifier = androidx.compose.ui.Modifier
             .padding(innerPadding)) {
 //            Header()
-            Text(text=photoViewModel.photoUiState)
             Column {
-                Content(modifier = Modifier.weight(1f, false))
+                Content(modifier = Modifier.weight(1f, false), photoViewModel)
                 ScanBtn(navController)
             }
         }
@@ -87,7 +87,7 @@ fun Header(){
 //    "nutrients": "100g of Bilimbi contains: \nCalories: 25 \nProtein: 1g \nFat: 1g \nFibre: 1g \nCarbohydrates: 1.9g \nCalcium: 15mg \nIron: 1mg"
 //}
 @Composable
-fun Content(modifier: Modifier){
+fun Content(modifier: Modifier, photoViewModel: PhotoViewModel){
     val context = LocalContext.current
     val path = context.getExternalFilesDir(null)!!.absolutePath
     val imagePath = "$path/image.jpg"
@@ -100,6 +100,7 @@ fun Content(modifier: Modifier){
 
         return
     }
+    photoViewModel.getFruitData(imagePath)
     Column(modifier = modifier
         .verticalScroll(rememberScrollState())
     ) {
@@ -109,7 +110,7 @@ fun Content(modifier: Modifier){
             modifier = Modifier.align(Alignment.CenterHorizontally)
         )
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
-            Text(text = "Bilimbi", fontWeight = FontWeight.Bold, fontSize = 32.sp)
+            Text(text = photoViewModel.photoUiState.fruitName, fontWeight = FontWeight.Bold, fontSize = 32.sp)
         }
         Column(modifier = Modifier.padding(10.dp)) {
             Item("Origin", "Native to tropical regions of Southeast Asia")

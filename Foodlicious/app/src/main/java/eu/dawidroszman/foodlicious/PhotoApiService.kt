@@ -1,20 +1,25 @@
 package eu.dawidroszman.foodlicious
 
+import com.google.gson.GsonBuilder
+import okhttp3.MultipartBody
 import retrofit2.Retrofit
-import retrofit2.converter.scalars.ScalarsConverterFactory
-import retrofit2.http.GET
+import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.http.Multipart
 import retrofit2.http.POST
+import retrofit2.http.Part
 
-private const val BASE_URL = "http://0.0.0.0:8080"
+val gson = GsonBuilder()
+    .setLenient()
+    .create()
+private const val BASE_URL = "http://192.168.0.135:8080"
 private val retrofit = Retrofit.Builder()
-    .addConverterFactory(ScalarsConverterFactory.create())
+    .addConverterFactory(GsonConverterFactory.create(gson))
     .baseUrl(BASE_URL)
     .build()
 interface PhotoApiService{
-    @GET("hello")
-    suspend fun getHello(): String
+    @Multipart
     @POST("get_fruit_data")
-    suspend fun getFruiData(): FruitData
+    suspend fun getFruitData(@Part file: MultipartBody.Part): FruitData
 }
 
 object PhotoApi {

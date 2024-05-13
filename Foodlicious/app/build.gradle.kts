@@ -74,9 +74,7 @@ dependencies {
 
     // Retrofit
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
-    // Retrofit with Scalar Converter
-    implementation("com.squareup.retrofit2:converter-scalars:2.9.0")
-
+    implementation ("com.squareup.retrofit2:converter-gson:2.5.0")
 
     val cameraxVersion = "1.3.3"
     implementation("androidx.camera:camera-core:$cameraxVersion")

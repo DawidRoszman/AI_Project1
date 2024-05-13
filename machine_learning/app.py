@@ -34,7 +34,7 @@ def hello():
     return "Hello from the API", 200
 
 
-@app.route("/get_fruit_name", methods=["POST"])
+@app.route("/get_fruit_data", methods=["POST"])
 def get_fruit_name():
     # Check if a file was posted
     if "file" not in request.files:
@@ -71,7 +71,7 @@ def get_fruit_name():
     # Remove the temporary file
     os.remove(temp_filename)
 
-    return jsonify({"fruit_name": fruit}), 200
+    return jsonify(fruit), 200
 
 
 if __name__ == "__main__":
