@@ -1,4 +1,10 @@
 fruits = [
+    {
+        "id": "aloevera",
+    },
+    {
+        "id": "banana",
+    },
     # Bilimbi
     # Sources: https://www.specialtyproduce.com/produce/bilimbi_fruit_14716.php
     # https://www.medindia.net/calories-in-indian-food/common_foods/fruits/bilimbi.htm
