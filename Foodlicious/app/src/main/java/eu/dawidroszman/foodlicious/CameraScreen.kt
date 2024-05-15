@@ -24,6 +24,7 @@ import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -41,7 +42,6 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CameraScreen(navController: NavController){
-    val scaffoldState =  rememberBottomSheetScaffoldState()
     val applicationContext = LocalContext.current
     val controller = remember {
         LifecycleCameraController(applicationContext).apply {
@@ -50,17 +50,16 @@ fun CameraScreen(navController: NavController){
             )
         }
     }
-    BottomSheetScaffold(scaffoldState = scaffoldState,
-        sheetPeekHeight = 0.dp,
-        sheetContent = {}) {
+    Scaffold() {
         padding ->
             Box(modifier = Modifier
                 .fillMaxSize()
                 .padding(padding)){
                 CameraPreview(controller = controller,
                     modifier = Modifier.fillMaxSize())
-                IconButton(onClick = { navController.navigate(Screen.MainScreen.route) }, Modifier.offset(16.dp)) {
+                IconButton(onClick = { navController.navigate(Screen.MainScreen.route) }, Modifier.offset(24.dp)) {
                     Icon(
+                        modifier = Modifier.size(48.dp),
                         imageVector = Icons.Default.Close,
                         contentDescription = "Close camera"
                     )
