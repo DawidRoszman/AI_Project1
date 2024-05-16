@@ -83,8 +83,6 @@ test_generator = test_datagen.flow_from_directory(
     class_mode="categorical",
 )
 
-print(len(train_generator.class_indices))
-
 # Create the CNN model
 model = Sequential()
 
@@ -118,18 +116,18 @@ early_stopping = EarlyStopping(
 
 
 # Train the model with early stopping
-epochs = 60
-history = model.fit(
-    train_generator,
-    epochs=epochs,
-    validation_data=test_generator,
-    callbacks=[early_stopping],
-)
-# Save the model
-model.save("plant_type_classifier_all.keras")
-
+# epochs = 60
+# history = model.fit(
+#     train_generator,
+#     epochs=epochs,
+#     validation_data=test_generator,
+#     callbacks=[early_stopping],
+# )
+# # Save the model
+# model.save("plant_type_classifier_all.keras")
+#
 # Load model
-# model = load_model("./plant_type_classifier.keras")
+model = load_model("./plant_type_classifier_all.keras")
 
 # Evaluate the model
 test_loss, test_acc = model.evaluate(test_generator)
@@ -137,10 +135,11 @@ print("Test accuracy:", test_acc)
 
 
 # Load the image
-img_path = "./split_ttv_dataset_type_of_plants/waterapple/aug_0_7674.jpg"
+img_path = "./split_ttv_dataset_type_of_plants/watermelon/aug_0_7754.jpg"
 img = load_img(
     img_path, target_size=IMAGE_SIZE
 )  # replace with the input size of your model
+img.show()
 
 # Convert the image to a numpy array
 img_array = img_to_array(img)
