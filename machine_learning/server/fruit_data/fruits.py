@@ -52,6 +52,20 @@ fruits = [
         "fact": "Cantaloupes, botanically a part of the Cucumis genus, are aromatic melons belonging to the Cucurbitaceae family. There are two general categories of melons recognized under the Cantaloupe descriptor: European Cantaloupes, also known as True Cantaloupes, and North American Cantaloupes, or Common or Conventional Cantaloupes. European Cantaloupes are classified as Cucumis melo var. cantalupensis and are primarily grown in Europe and Asia. The melons have a hard, dense rind that showcases beige-green hues and is often covered in rough, wart-like protrusions. North American Cantaloupes, or Cucumis melo var. reticulatus, bear a light tan, netted rind, and are a type of muskmelon, valued for their thick orange flesh. Within each of these melon categories, there are many different varieties, and each cultivar thrives in various climates, soils, and growing conditions. Cantaloupes are favored for fresh eating and are sweet, aromatic melons with dense flesh. The melons are the most commercially cultivated and popular melon throughout the United States and are versatile in culinary preparations, well suited as a healthy snack, dessert topping, or accompaniment to sweet and savory dishes.",
         "nutrients": "100g of Cantaloupe Melons contain: \nCalories: 34 \nProtein: 0.84g \nFat: 0.19g \nFibre: 0.9g \nCarbohydrates: 8.16g \nCalcium: 9mg \nIron: 0.21mg \nPotassium: 267mg \nVitamin A: 169mcg\nVitamin C: 36.7mg",
     },
+### Cassava
+### https://www.specialtyproduce.com/produce/Tapioca_Root_10161.php
+### https://www.fatsecret.com/calories-nutrition/usda/cassava
+
+    {
+        "id": "cassava",
+        "name": "Cassava",
+        "type": "Root Vegetable",
+        "season": "Tapioca root is available year-round.",
+        "origin": "Native to South America and parts of the Caribbean",
+        "description": "Tapioca root is the underground portion of the Cassava plant. The tropical bush-like plant has edible palm-like leaves at the end of long reddish colored stems. The plant branches irregularly and can grow to the size of a small tree if allowed. The large tapered Tapioca roots are similar in size and shape to a sweet potato. The tuber has an inedible shiny brown skin with rough patches and faint growth rings ascending down to the tip. The starchy flesh of the Tapioca root is a light white or cream color and has a grainy texture similar to potatoes with a mild, sweet flavor. Tapioca root contains cyanogenic glucosides called saponins, the amount of which varies depending on the variety (“bitter” or “sweet”). Sweet Tapioca contains lower levels of the compound and requires less preparation prior to eating, which is why it is the variety most commonly available as a vegetable. Tapioca root is soaked in water and often repeatedly washed prior to its use to get rid of the saponins.",
+        "fact": "Tapioca root, as it is called most frequently in India, is referred to as ‘Cassava root’ in America and is known as Mandioca, Manioc, and Manihot in other parts of the world. Botanically, the plant is known as Manihot esculenta. The Central American plant and root are known as ‘Yuca’, pronounced YOO-ka, which is the Native American word for Cassava. It is sometimes confused for the desert plant, yucca, pronounced YUHK-a, which is unrelated to the root vegetable. Tapioca root is one of the most adaptable and drought-resistant plants, making it an ideal food crop for a variety of environments. Tapioca root is the source of tapioca starch or flour, which is a popular gluten-free alternative.",
+        "nutrients": "100g of Cassava contains: \nCalories: 160 \nProtein: 1.36g \nFat: 0.28g \nFibre: 1.8g \nCarbohydrates: 38.06g \nCalcium: 16mg \nIron: 0.27mg \nPotassium: 271mg \nVitamin C: 20.6mg \nVitamin A: 1mcg"
+    },
     ### Coconuts
     ### Sources: https://www.specialtyproduce.com/produce/Husk_Coconuts_490.php
     ### https://www.fatsecret.com/calories-nutrition/usda/coconut

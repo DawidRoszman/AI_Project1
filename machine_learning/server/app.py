@@ -85,7 +85,7 @@ def get_fruit_name():
     img_array = np.expand_dims(img_array, axis=0)
 
     # Normalize the image (if your model expects normalized images)
-    img_array /= 255.0
+    # img_array /= 255.0
 
     # Use the model to make a prediction
     prediction = model.predict(img_array)
@@ -94,6 +94,7 @@ def get_fruit_name():
     # Get the name of the fruit
     index = np.argmax(prediction)
     fruit_name = classes[index]
+    print(fruit_name)
 
     fruit = ""
 
